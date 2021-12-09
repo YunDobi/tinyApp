@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 const urlDatabase = {
   "b2xVn2": {
     longURL: "http://www.lighthouselabs.ca",
@@ -12,7 +14,7 @@ const users = {
   "userRandomID": {
     id: "userRandomID",
     email: "user@example.com",
-    password: "123"
+    password: bcrypt.hashSync("123", 10)
   }
 };
 
