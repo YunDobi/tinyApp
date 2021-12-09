@@ -16,10 +16,13 @@
       <button type="submit" class="btn btn-primary">Logout</button>
     </form>
     <% } else { %>
-      <form class="form-inline" action="/login" method="post">
-        <input type="text" name="username">
+      <form class="form-inline" method="get" action="/register">
+        <button type="submit" class="btn btn-success">Register</button>
+      </form>
+      <form class="form-inline" action="/login" method="get">
         <button type="submit" class="btn btn-primary">Login</button> 
       </form>
+      
     <% } %>
   </nav>
 </header>
