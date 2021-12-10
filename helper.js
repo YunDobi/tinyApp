@@ -3,7 +3,9 @@ const bcrypt = require('bcryptjs');
 const urlDatabase = {
   "b2xVn2": {
     longURL: "http://www.lighthouselabs.ca",
-    userID: "userRandomID"
+    userID: "userRandomID",
+    visit: 0,
+    datevisit: []
   },
   "9sm5xK": {
     longURL: "http://www.google.com",
@@ -38,10 +40,11 @@ const urlsForUser = (id) => {
   return out;
 };
 
-const findEmail = (email) => {
-  for (let userID in users) {
-    const user = users[userID];
-    if (users[userID].email === email) {
+
+const getUserByEmail = (email, database) => {
+  for (let userID in database) {
+    const user = database[userID];
+    if (user.email === email) {
       return user;
     }
   }
@@ -49,4 +52,4 @@ const findEmail = (email) => {
 
 
 
-module.exports = {urlDatabase, users, generateRandomString, urlsForUser,findEmail};
+module.exports = {urlDatabase, users, generateRandomString, urlsForUser,getUserByEmail};
