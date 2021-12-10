@@ -84,7 +84,7 @@ app.post("/urls", (req, res) => {
     res.status(403).send("You are not logged In");
   }
   let short = generateRandomString();
-  urlDatabase[short] = {longURL: req.body.longURL, userID: userId};
+  urlDatabase[short] = {longURL: req.body.longURL, userID: userId, visit: 0, datevisit: new Date};
   res.redirect(`/urls/${short}`);
 });
 
@@ -224,6 +224,7 @@ app.post("/register", (req, res) => {
 app.get("/u/:id", (req,res)=> {
   const id = req.params.id;
   const urlData = urlDatabase[id];
+  urlData.visit += 1;
   if (!urlData) {
     res.status(404).send("ShortURL is not exist");
   }
