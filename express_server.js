@@ -51,6 +51,7 @@ app.get("/urls", (req, res) => {
     const templateVars = {
       urls: output,
       user: users[userId],
+      username: userId
     };
     res.render("urls_index", templateVars);
   }
@@ -84,7 +85,7 @@ app.post("/urls", (req, res) => {
     res.status(403).send("You are not logged In");
   }
   let short = generateRandomString();
-  urlDatabase[short] = {longURL: req.body.longURL, userID: userId, visit: 0, datevisit: new Date};
+  urlDatabase[short] = {longURL: req.body.longURL, userID: userId, visit: 0, datevisit: [Date.now()]};
   res.redirect(`/urls/${short}`);
 });
 
@@ -119,7 +120,9 @@ app.post("/urls/:id", (req, res) => {
 
   urlDatabase[id] = {
     longURL: req.body.longURL,
-    userID: req.session.user_id
+    userID: req.session.user_id,
+    visit: 0,
+    datevisit: [Date.now()]
   };
   res.redirect(`/urls`);
 });
@@ -169,7 +172,6 @@ app.post("/login", (req, res) => {
   if (!bcrypt.compareSync(password, user.password)) {
     return res.status(403).send("The password is not Correct!");
   }
-  
   req.session.user_id = user.id;
   res.redirect("/urls");
 });
